@@ -329,7 +329,7 @@
 
   <section id="trail-status">
     <h2>Trail Status</h2>
-    <p>Latest trail conditions are loaded from the server. This section updates from a JSON file hosted with the site.</p>
+    <p>Latest trail conditions are loaded live from the Zeroglitch trail status feed when available.</p>
     <div id="trail-status-container" class="grid">
       <div class="card status-card">
         <div class="pad">
@@ -346,7 +346,8 @@
 
   <script>
     const statusContainer = document.getElementById('trail-status-container');
-    const statusUrl = 'trail-status.json';
+    const statusUrl = 'https://zeroglitch.com/trailstatus/data/trails.json';
+    const fallbackUrl = 'trail-status.json';
 
     function normalizeStatus(status) {
       if (!status) return 'unknown';
@@ -365,7 +366,9 @@
 
       statusContainer.innerHTML = trails.map(trail => {
         const status = normalizeStatus(trail.status);
-        const details = trail.details ? `<p>${trail.details}</p>` : '';
+        const updated = trail.updated_at ? `Updated ${trail.updated_at}` : '';
+        const updatedBy = trail.updated_by ? `by ${trail.updated_by}` : '';
+        const details = trail.details ? `<p>${trail.details}</p>` : `<p>${updated}${updated && updatedBy ? ' ' : ''}${updatedBy}</p>`;
         return `
           <div class="card status-card">
             <div class="pad">
@@ -378,18 +381,20 @@
       }).join('');
     }
 
-    fetch(statusUrl, { cache: 'reload' })
-      .then(response => {
-        if (!response.ok) throw new Error('Unable to load trail status.');
-        return response.json();
-      })
-      .then(data => {
-        const trails = data.trails || data;
-        renderTrailStatus(trails);
-      })
-      .catch(error => {
+    function loadStatus(url) {
+      return fetch(url, { cache: 'reload' })
+        .then(response => {
+          if (!response.ok) throw new Error('Unable to load trail status.');
+          return response.json();
+        })
+        .then(data => renderTrailStatus(data.trails || data));
+    }
+
+    loadStatus(statusUrl).catch(() => {
+      loadStatus(fallbackUrl).catch(error => {
         statusContainer.innerHTML = '<div class="card status-card"><div class="pad"><h3>Trail status unavailable</h3><p>Unable to fetch updates from the server.</p><p class="status-footer">' + error.message + '</p></div></div>';
       });
+    });
   </script>
 </body>
 </html>
