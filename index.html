@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trident Off-Road Cycling Collective</title>
+  <meta name="description" content="Trident Off-Road Cycling Collective supports trail access, stewardship, and off-road cycling across the South Carolina Trident region." />
+  <style>
+    :root{
+      /* TORCC palette (aligned to logo) */
+      --navy: #2f4a66;
+      --gold: #d9b33a;
+      --forest: #2f5e44;
+      --tan-light: #efe7d6;
+      --tan: #d8cbb0;
+      --charcoal: #222222;
+      --white: #ffffff;
+
+      --bg: var(--white);
+      --text: var(--charcoal);
+      --accent: var(--gold);
+      --accent-2: var(--forest);
+
+      --footer-bg: var(--navy);
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    header{
+      position: relative;
+      min-height: 70vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.42)),
+        url("assets/hero-trail.jpg") center/cover no-repeat;
+      color: var(--white);
+    }
+
+    nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      gap: 1rem;
+    }
+
+    nav .logo{
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    nav img{
+      height: 72px; /* bigger so it doesn't feel like a favicon */
+      width: auto;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.25));
+    }
+
+    nav ul{
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a{
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+    nav a:hover{ opacity: 1; text-decoration: underline; }
+
+    .hero{
+      max-width: 1000px;
+      padding: 4.5rem 2rem 5rem;
+    }
+
+    .hero h1{
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      margin: 0 0 0.75rem 0;
+      letter-spacing: 0.01em;
+    }
+
+    .hero p{
+      font-size: 1.15rem;
+      max-width: 680px;
+      margin: 0 0 1.75rem 0;
+      opacity: 0.95;
+    }
+
+    .cta{
+      display: inline-block;
+      background: var(--accent);
+      color: #1b1b1b;
+      padding: 0.8rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    .cta:hover{ transform: translateY(-1px); }
+
+    section{
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-alt{
+      background: var(--tan-light);
+    }
+
+    h2{ margin-top: 0; font-size: 1.9rem; }
+    h3{ margin-top: 0; }
+
+    .grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .card{
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .card .pad{ padding: 1.25rem 1.25rem 1.4rem; }
+    .card p{ margin-bottom: 0; }
+
+    .photo{
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .banner{
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 1.5rem 0 2rem;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    }
+    .banner img{
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pill{
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(217,179,58,0.18);
+      color: #3b2b00;
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    footer{
+      background: var(--footer-bg); /* now matches org palette (navy) */
+      color: var(--white);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 720px){
+      nav{ padding: 1rem 1rem; }
+      nav img{ height: 60px; }
+      .hero{ padding: 3.25rem 1rem 4rem; }
+      section{ padding: 3.25rem 1rem; }
+      .banner img{ height: 200px; }
+      .photo{ height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="torcc_logo.png" alt="TORCC logo" />
+      </div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#trails">Trails</a></li>
+        <li><a href="#volunteer">Volunteer</a></li>
+        <li><a href="#membership">Membership</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <h1>Trident Off-Road Cycling Collective</h1>
+      <p>Supporting trail access, stewardship, and off-road cycling across the South Carolina Trident region.</p>
+      <a class="cta" href="#volunteer">Get Involved</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <h2>About TORCC</h2>
+    <p>
+      Trident Off-Road Cycling Collective is a nonprofit organization dedicated to building, maintaining, and protecting
+      sustainable natural-surface trails while promoting responsible off-road cycling and outdoor recreation.
+    </p>
+  </section>
+
+  <section id="trails" class="section-alt">
+    <h2>Trails & Stewardship</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="pad">
+          <div class="pill">Build</div>
+          <h3>Trail Building</h3>
+          <p>Designing and constructing sustainable trails that serve riders, land managers, and the environment.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <div class="pill">Maintain</div>
+          <h3>Maintenance</h3>
+          <p>Organizing volunteer days to keep existing trails safe, fun, and environmentally sound.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <div class="pill">Partner</div>
+          <h3>Partnerships</h3>
+          <p>Working with local parks, municipalities, and landowners across Berkeley, Charleston, and Dorchester counties.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="volunteer">
+    <h2>Volunteer</h2>
+    <p>
+      Whether you ride, hike, or just love the outdoors, volunteers are the backbone of TORCC.
+      No experience required—just a willingness to help.
+    </p>
+
+    <div class="banner">
+      <img src="assets/volunteer-banner.jpg" alt="Volunteers building and shaping trail features" />
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <img class="photo" src="assets/trailwork-1.jpg" alt="Trail crew shaping a berm and clearing the tread" />
+        <div class="pad">
+          <h3>Show up for a work day</h3>
+          <p>Bring gloves, water, and a good attitude. We’ll provide direction, tools, and a crew to work with.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="photo" src="assets/trailwork-2.jpg" alt="Volunteers posing on a newly built trail feature" />
+        <div class="pad">
+          <h3>Build community</h3>
+          <p>Trail building is hands-on, social, and satisfying—leave the woods better than you found them.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="photo" src="assets/trailwork-3.jpg" alt="Volunteers building a wooden trail feature" />
+        <div class="pad">
+          <h3>Build features</h3>
+          <p>From hand tools to lumber—help create durable features that keep trails fun and sustainable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="membership" class="section-alt">
+    <h2>Membership & Support</h2>
+    <p>
+      Memberships and donations directly support trail projects, tools, materials, and educational outreach.
+      TORCC is a 501(c)(3) nonprofit organization.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Trident Off-Road Cycling Collective &middot; A South Carolina 501(c)(3) Nonprofit</p>
+  </footer>
+
+</body>
+</html>
