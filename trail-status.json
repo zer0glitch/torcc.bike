@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Battery Creek Preserve",
+    "status": "Open",
+    "details": "All trails open. Expect wet sections after rain."
+  },
+  {
+    "name": "Daniel Island Greenway",
+    "status": "Limited",
+    "details": "Some sections closed for maintenance; boardwalk detour in place."
+  },
+  {
+    "name": "West Ashley Reserve",
+    "status": "Closed",
+    "details": "Closed due to storm damage and cleanup."
+  }
+]

@@ -174,6 +174,37 @@
       margin-bottom: 0.75rem;
     }
 
+    .status-card{
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .status-pill{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .status-pill.open{ background: rgba(46, 125, 50, 0.14); color: #2f6f36; }
+    .status-pill.limited{ background: rgba(245, 124, 0, 0.14); color: #a95f02; }
+    .status-pill.closed{ background: rgba(183, 28, 28, 0.12); color: #7a1717; }
+    .status-pill.unknown{ background: rgba(33, 33, 33, 0.12); color: #222; }
+
+    .status-footer{
+      color: rgba(0,0,0,0.7);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
     footer{
       background: var(--footer-bg); /* now matches org palette (navy) */
       color: var(--white);
@@ -202,6 +233,7 @@
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#trails">Trails</a></li>
+        <li><a href="#trail-status">Trail Status</a></li>
         <li><a href="#volunteer">Volunteer</a></li>
         <li><a href="#membership">Membership</a></li>
       </ul>
@@ -295,9 +327,69 @@
     </p>
   </section>
 
+  <section id="trail-status">
+    <h2>Trail Status</h2>
+    <p>Latest trail conditions are loaded from the server. This section updates from a JSON file hosted with the site.</p>
+    <div id="trail-status-container" class="grid">
+      <div class="card status-card">
+        <div class="pad">
+          <h3>Loading trail status…</h3>
+          <p>Please wait while we retrieve the latest updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <p>&copy; 2026 Trident Off-Road Cycling Collective &middot; A South Carolina 501(c)(3) Nonprofit</p>
   </footer>
 
+  <script>
+    const statusContainer = document.getElementById('trail-status-container');
+    const statusUrl = 'trail-status.json';
+
+    function normalizeStatus(status) {
+      if (!status) return 'unknown';
+      const key = status.toString().trim().toLowerCase();
+      if (['open', 'open now', 'available'].includes(key)) return 'open';
+      if (['limited', 'caution', 'watch', 'partial'].includes(key)) return 'limited';
+      if (['closed', 'shut', 'no access'].includes(key)) return 'closed';
+      return 'unknown';
+    }
+
+    function renderTrailStatus(trails) {
+      if (!Array.isArray(trails) || trails.length === 0) {
+        statusContainer.innerHTML = '<div class="card status-card"><div class="pad"><h3>No trail statuses are available.</h3><p>Check back later or contact TORCC for updates.</p></div></div>';
+        return;
+      }
+
+      statusContainer.innerHTML = trails.map(trail => {
+        const status = normalizeStatus(trail.status);
+        const details = trail.details ? `<p>${trail.details}</p>` : '';
+        return `
+          <div class="card status-card">
+            <div class="pad">
+              <div class="pill status-pill ${status}">${trail.status || 'Unknown'}</div>
+              <h3>${trail.name || 'Unnamed trail'}</h3>
+              ${details}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    fetch(statusUrl, { cache: 'reload' })
+      .then(response => {
+        if (!response.ok) throw new Error('Unable to load trail status.');
+        return response.json();
+      })
+      .then(data => {
+        const trails = data.trails || data;
+        renderTrailStatus(trails);
+      })
+      .catch(error => {
+        statusContainer.innerHTML = '<div class="card status-card"><div class="pad"><h3>Trail status unavailable</h3><p>Unable to fetch updates from the server.</p><p class="status-footer">' + error.message + '</p></div></div>';
+      });
+  </script>
 </body>
 </html>
