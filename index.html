@@ -163,15 +163,52 @@
       display: block;
     }
 
-    .pill{
-      display: inline-block;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      background: rgba(217,179,58,0.18);
-      color: #3b2b00;
-      font-weight: 800;
-      font-size: 0.85rem;
-      margin-bottom: 0.75rem;
+    .form{
+      display: grid;
+      gap: 1rem;
+      max-width: 680px;
+      margin-top: 1.25rem;
+    }
+
+    .field{
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.14);
+      font: inherit;
+      background: #fff;
+    }
+
+    .field textarea{
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form .btn,
+    .form .cta{
+      width: fit-content;
+    }
+
+    .form-note{
+      font-size: 0.95rem;
+      color: rgba(0,0,0,0.65);
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 720px){
+      nav{ padding: 1rem 1rem; }
+      nav img{ height: 60px; }
+      .hero{ padding: 3.25rem 1rem 4rem; }
+      section{ padding: 3.25rem 1rem; }
+      .banner img{ height: 200px; }
+      .photo{ height: 200px; }
     }
 
     .status-card{
@@ -213,6 +250,27 @@
       font-size: 0.95rem;
     }
 
+    .social-links{
+      margin: 1rem 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .social-links a{
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 2px;
+    }
+
+    .social-links a:hover{
+      opacity: 0.9;
+    }
+
     @media (max-width: 720px){
       nav{ padding: 1rem 1rem; }
       nav img{ height: 60px; }
@@ -236,6 +294,7 @@
         <li><a href="#trail-status">Trail Status</a></li>
         <li><a href="#volunteer">Volunteer</a></li>
         <li><a href="#support">Support</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
 
@@ -328,6 +387,54 @@
     </p>
   </section>
 
+  <section id="contact">
+    <h2>Contact TORCC</h2>
+    <p>Send us a question, report trail conditions, or request information about a trial ride.</p>
+
+    <div class="card">
+      <div class="pad">
+        <form action="https://formspree.io/f/meewaagg" method="POST" class="form">
+          <input type="hidden" name="_subject" value="TORCC Contact Form Submission" />
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+
+          <label class="field">
+            <span>Category</span>
+            <select name="category" id="contact-category" required>
+              <option value="general info">General info</option>
+              <option value="trail report">Trail report</option>
+              <option value="trail trial">Trail trial</option>
+            </select>
+          </label>
+
+          <label class="field" id="trail-select-field" style="display:none;">
+            <span>Trail</span>
+            <select name="trail">
+              <option value="Wannamaker North Trail">Wannamaker North Trail</option>
+              <option value="Biggin Creek">Biggin Creek</option>
+              <option value="Sawmill Ridges">Sawmill Ridges</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Message</span>
+            <textarea name="message" rows="5" placeholder="Share your question, report, or request."></textarea>
+          </label>
+
+          <button class="cta" type="submit">Send message</button>
+          <p class="form-note">We respect your privacy and only use this information to respond to your request.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <section id="trail-status">
     <h2>Trail Status</h2>
     <p>Latest trail conditions are loaded live from the Zeroglitch trail status feed when available.</p>
@@ -343,6 +450,10 @@
 
   <footer>
     <p>&copy; 2026 Trident Off-Road Cycling Collective &middot; A South Carolina 501(c)(3) Nonprofit</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/torcc.bike" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/torcc.bike" target="_blank" rel="noopener">Facebook</a>
+    </div>
   </footer>
 
   <script>
@@ -396,6 +507,20 @@
         statusContainer.innerHTML = '<div class="card status-card"><div class="pad"><h3>Trail status unavailable</h3><p>Unable to fetch updates from the server.</p><p class="status-footer">' + error.message + '</p></div></div>';
       });
     });
+  </script>
+  <script>
+    const categorySelect = document.getElementById('contact-category');
+    const trailField = document.getElementById('trail-select-field');
+
+    function updateTrailField() {
+      if (!categorySelect || !trailField) return;
+      trailField.style.display = categorySelect.value === 'trail report' ? 'block' : 'none';
+    }
+
+    if (categorySelect) {
+      categorySelect.addEventListener('change', updateTrailField);
+      updateTrailField();
+    }
   </script>
 </body>
 </html>
